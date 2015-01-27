@@ -5,13 +5,14 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Jan 27 17:08:47 2015 Arthur Amstutz
+** Last update Tue Jan 27 17:12:56 2015 Arthur Amstutz
 */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stddef.h>
 #include "list.h"
+#include "my_malloc.h"
 
 void		show_alloc_mem()
 {
@@ -49,7 +50,6 @@ void		delete_at_back()
 
 void		*insert(size_t size)
 {
-  int		size;
   t_list	*tmp;
   t_list	*new;
 
