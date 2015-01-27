@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Jan 27 14:18:15 2015 Arthur Amstutz
+** Last update Tue Jan 27 16:17:39 2015 Arthur Amstutz
 */
 
 #include <stdio.h>
@@ -23,8 +23,11 @@ void		show_alloc_mem(t_list **mem)
   printf("break : %p\n", g_startheap);
   while (tmp != NULL)
     {
-      size = tmp->end - tmp->begin;
-      printf("%p - %p : %d octets\n", tmp->ptr_begin, tmp->ptr_end, size);
+      if (!tmp->isFree)
+	{
+	  size = tmp->end - tmp->begin;
+	  printf("%p - %p : %d octets\n", tmp->ptr_begin, tmp->ptr_end, size);
+	}
       tmp = tmp->next;
     }
 }
