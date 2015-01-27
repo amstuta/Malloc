@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Jan 27 16:58:41 2015 Arthur Amstutz
+** Last update Tue Jan 27 17:08:47 2015 Arthur Amstutz
 */
 
 #include <unistd.h>
@@ -26,7 +26,7 @@ void		show_alloc_mem()
     {
       if (!tmp->isFree)
 	{
-	  size = tmp->end - tmp->begin;
+	  size = tmp->ptr_end - tmp->ptr_begin;
 	  printf("%p - %p : %d octets\n", tmp->ptr_begin, tmp->ptr_end, size);
 	}
       tmp = tmp->next;
@@ -59,12 +59,12 @@ void		*insert(size_t size)
       if ((tmp->ptr_end - tmp->ptr_begin) >= (size + sizeof(t_list)) \
 	  && tmp->isFree == true)
 	{
-	  new = tmp->ptr_end + 1;
-	  new->ptr_begin = tmp->ptr_end + 1 + sizeof(t_list);
-	  new->ptr_end = tmp->ptr_end;
+	  new = tmp->ptr_begin + 1 + size;
+	  new->ptr_begin = tmp->ptr_begin + 1 + size + sizeof(t_list);
+	  new->ptr_end = new->ptr_begin + size;
 	  new->isFree = true;
 	  new->next = tmp->next;
-	  tmp->ptr_end = end;
+	  tmp->ptr_end = new->ptr_begin - 1 - sizeof(t_list);
 	  tmp->isFree = false;
 	  tmp->next = new;
 	  return (tmp->ptr_begin);
