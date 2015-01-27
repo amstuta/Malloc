@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:37:12 2015 Arthur Amstutz
-** Last update Tue Jan 27 12:41:36 2015 Arthur Amstutz
+** Last update Tue Jan 27 16:57:43 2015 Arthur Amstutz
 */
 
 #ifndef LIST_H_
@@ -25,6 +25,9 @@ typedef struct	s_list
   struct s_list	*next;
 }		t_list;
 
-void	add_to_list_end();
+void   	show_alloc_mem();
+void   	delete_at_back();
+void 	*insert(size_t size);
+t_bool	add_memory_end();
 
 #endif /* !LIST_H_  */
