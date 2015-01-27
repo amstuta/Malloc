@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:37:12 2015 Arthur Amstutz
-** Last update Tue Jan 27 17:01:53 2015 Arthur Amstutz
+** Last update Tue Jan 27 17:02:45 2015 raphael elkaim
 */
 
 #ifndef LIST_H_
@@ -19,7 +19,7 @@ typedef enum	s_bool
 
 typedef struct	s_list
 {
-  bool		isFree;
+  t_bool	isFree;
   void		*ptr_begin;
   void		*ptr_end;
   struct s_list	*next;

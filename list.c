@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Jan 27 17:12:56 2015 Arthur Amstutz
+** Last update Tue Jan 27 17:26:52 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -42,7 +42,7 @@ void		delete_at_back()
   if (tmp == NULL)
     return ;
   if (tmp->next == NULL)
-    tmp->ifFree = true;
+    tmp->isFree = true;
   while (tmp->next->next != NULL)
     tmp = tmp->next;
   tmp->next->isFree = true;
@@ -56,7 +56,7 @@ void		*insert(size_t size)
   tmp = g_mem;
   while (tmp != NULL)
     {
-      if ((tmp->ptr_end - tmp->ptr_begin) >= (size + sizeof(t_list)) \
+      if ((size_t)(tmp->ptr_end - tmp->ptr_begin) >= (size + sizeof(t_list))\
 	  && tmp->isFree == true)
 	{
 	  new = tmp->ptr_begin + 1 + size;
@@ -78,13 +78,15 @@ t_bool		add_memory_end()
 {
   t_list	*tmp;
 
-  if (sbrk(4096) == -1)
+  if (sbrk(4096) == (void *)-1)
     return (false);
-  tmp = g_mem;
+  tmp = g_mem = g_startheap;
   if (g_mem == g_startheap)
     {
       g_mem->ptr_begin = g_mem + sizeof(t_list);
       g_mem->ptr_end = g_mem + 4096;
+      g_mem->isFree = true;
+      g_mem->next = 0;
       return (true);
     }
   while (tmp->next != NULL)

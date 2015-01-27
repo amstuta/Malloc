@@ -5,7 +5,7 @@
 ## Login   <elkaim_r@epitech.net>
 ## 
 ## Started on  Tue Jan 27 12:11:45 2015 raphael elkaim
-## Last update Tue Jan 27 12:28:38 2015 raphael elkaim
+## Last update Tue Jan 27 17:01:30 2015 raphael elkaim
 ##
 
 CC = gcc
@@ -13,7 +13,10 @@ RM = rm -f
 CFLAGS += -Wextra -Wall -Werror -fPIC
 LDFLAGS = -shared
 NAME = libmy_malloc_$(HOSTTYPE).so
-SRCS = malloc.c
+SRCS = malloc.c \
+       align.c \
+       list.c \
+
 OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
