@@ -5,17 +5,17 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:37:12 2015 Arthur Amstutz
-** Last update Tue Jan 27 16:57:43 2015 Arthur Amstutz
+** Last update Tue Jan 27 17:01:53 2015 Arthur Amstutz
 */
 
 #ifndef LIST_H_
 # define LIST_H_
 
-typedef enum	bool
+typedef enum	s_bool
   {
     false,
     true
-  }		bool;
+  }		t_bool;
 
 typedef struct	s_list
 {
