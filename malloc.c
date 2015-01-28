@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 16:02:44 2015 raphael elkaim
+** Last update Wed Jan 28 16:13:35 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -54,12 +54,19 @@ void		*realloc(void *ptr, size_t size)
   void		*nptr;
 
   tmp = g_mem;
-  nptr = fake_malloc(size);
+  if (!ptr)
+    return (fake_malloc(size));
+  if (!size)
+    {
+      fake_free(ptr);
+      return (0);
+    }
   while (tmp)
     {
       if (tmp->ptr_begin == ptr)
 	{
-	  memcpy(nptr, tmp->ptr_begin, size);
+	  nptr = fake_malloc(size);
+	  nptr = memcpy(nptr, tmp->ptr_begin, size);
 	  fake_free(ptr);
 	  break ;
 	}
