@@ -5,7 +5,7 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:59:04 2015 raphael elkaim
-** Last update Wed Jan 28 16:24:11 2015 raphael elkaim
+** Last update Wed Jan 28 16:55:50 2015 raphael elkaim
 */
 
 void show_alloc_mem();
@@ -20,7 +20,7 @@ int main()
   test = malloc(120);
   malloc(4);
   free(test);
-  malloc(10);
+  calloc(10, 1);
   malloc(20);
   /*  for (i = 0;i < 10;i++)
     {
