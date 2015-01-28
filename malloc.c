@@ -5,29 +5,28 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 17:08:46 2015 raphael elkaim
+** Last update Wed Jan 28 17:18:25 2015 Arthur Amstutz
 */
 
 #include <unistd.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-//#include "align.h"
+#include <pthread.h>
 #include "my_malloc.h"
 #include "list.h"
 
 void	*g_startheap = 0;
 t_list	*g_mem = 0;
 
-void	*malloc(size_t size)
+void		*malloc(size_t size)
 {
-  void *res;
+  void		*res;
 
   if (!size)
     return (0);
   if (!g_startheap)
     g_startheap = sbrk(0);
-  //  printf("REACH FOR THE SKIES\n");
   while ((res = insert(size)) == 0)
     {
       if (add_memory_end() == false)
