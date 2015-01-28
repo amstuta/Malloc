@@ -5,30 +5,36 @@
 ## Login   <elkaim_r@epitech.net>
 ## 
 ## Started on  Tue Jan 27 12:11:45 2015 raphael elkaim
-## Last update Tue Jan 27 17:01:30 2015 raphael elkaim
+## Last update Wed Jan 28 11:03:04 2015 Arthur Amstutz
 ##
 
-CC = gcc
-RM = rm -f
-CFLAGS += -Wextra -Wall -Werror -fPIC
-LDFLAGS = -shared
-NAME = libmy_malloc_$(HOSTTYPE).so
-SRCS = malloc.c \
-       align.c \
-       list.c \
+CC	=	gcc
 
-OBJS = $(SRCS:.c=.o)
+RM	=	rm -f
+
+CFLAGS	+=	-Wextra -Wall -Werror -fPIC
+
+LDFLAGS	=	-shared
+
+NAME	=	libmy_malloc_$(HOSTTYPE).so
+
+SRCS	=	malloc.c \
+		align.c \
+		list.c \
+
+OBJS	=	$(SRCS:.c=.o)
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS)  $(LDFLAGS) -o $(NAME) && ln -sf $(NAME) libmy_malloc.so
+	 $(CC) $(OBJS)  $(LDFLAGS) -o $(NAME) && ln -sf $(NAME) libmy_malloc.so
 
 clean:
 	$(RM) $(OBJS)
 
-fclean: clean
+fclean:	clean
 	$(RM) $(NAME) libmy_malloc.so
 
-re: fclean all
+re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY:	all clean fclean re
