@@ -5,12 +5,31 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Wed Jan 28 12:26:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 12:37:55 2015 Arthur Amstutz
+** Last update Wed Jan 28 14:30:47 2015 raphael elkaim
 */
 
 #include <stddef.h>
+#include <unistd.h>
 #include "my_malloc.h"
 #include "list.h"
+
+void		suppress_mem()
+{
+  t_list	*tmp;
+
+  tmp = g_mem;
+  while (tmp->next)
+    tmp = tmp->next;
+  while ((tmp->ptr_begin - tmp->ptr_end) > 4096 && tmp->isFree && tmp != g_mem)
+    {
+      sbrk(-4096);
+      tmp->ptr_end = tmp->ptr_end - 4096;
+    }
+  /*  if (tmp == g_mem && tmp->isFree)
+    {
+
+    }*/
+}
 
 void		free(void *ptr)
 {
@@ -36,4 +55,5 @@ void		free(void *ptr)
 	}
       tmp = tmp->next;
     }
+  suppress_mem();
 }

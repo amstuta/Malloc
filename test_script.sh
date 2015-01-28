@@ -5,9 +5,10 @@
 ## Login   <elkaim_r@epitech.net>
 ## 
 ## Started on  Tue Jan 27 12:34:34 2015 raphael elkaim
-## Last update Tue Jan 27 17:44:33 2015 raphael elkaim
+## Last update Wed Jan 28 14:52:31 2015 raphael elkaim
 ##
 
 export LD_PRELOAD=./libmy_malloc.so
+#./a.out
 ./moul_malloc_stud
 unset LD_PRELOAD
