@@ -5,7 +5,7 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:59:04 2015 raphael elkaim
-** Last update Wed Jan 28 14:50:16 2015 raphael elkaim
+** Last update Wed Jan 28 16:24:11 2015 raphael elkaim
 */
 
 void show_alloc_mem();
@@ -16,7 +16,7 @@ int main()
   int b = 0;
   char *test;
   srandom(time(0));
-  malloc(7);
+  malloc(0);
   test = malloc(120);
   malloc(4);
   free(test);

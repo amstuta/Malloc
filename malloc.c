@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 16:13:35 2015 raphael elkaim
+** Last update Wed Jan 28 16:40:04 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -23,6 +23,8 @@ void	*malloc(size_t size)
 {
   void *res;
 
+  if (!size)
+    return (0);
   if (!g_startheap)
     g_startheap = sbrk(0);
   //  printf("REACH FOR THE SKIES\n");
@@ -38,6 +40,8 @@ void		*fake_malloc(size_t size)
 {
  void		*res;
 
+  if (!size)
+    return (0);
   if (!g_startheap)
     g_startheap = sbrk(0);
   while ((res = insert(size)) == 0)
@@ -66,7 +70,10 @@ void		*realloc(void *ptr, size_t size)
       if (tmp->ptr_begin == ptr)
 	{
 	  nptr = fake_malloc(size);
-	  nptr = memcpy(nptr, tmp->ptr_begin, size);
+	  if (size > (unsigned long)(tmp->ptr_end - tmp->ptr_begin))
+	    memcpy(nptr, tmp->ptr_begin, tmp->ptr_end - tmp->ptr_begin);
+	  else
+	    memcpy(nptr, tmp->ptr_begin, size);
 	  fake_free(ptr);
 	  break ;
 	}
