@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 17:08:46 2015 raphael elkaim
+** Last update Wed Jan 28 17:39:05 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -54,7 +54,11 @@ void		*fake_malloc(size_t size)
 
 void		*calloc(size_t size, size_t size2)
 {
-  return (fake_malloc(size * size2));
+  void		*ptr;
+
+  ptr = fake_malloc(size * size2);
+  memset(ptr, 0, size * size2);
+  return (ptr);
 }
 
 void		*realloc(void *ptr, size_t size)
