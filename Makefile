@@ -5,7 +5,7 @@
 ## Login   <elkaim_r@epitech.net>
 ## 
 ## Started on  Tue Jan 27 12:11:45 2015 raphael elkaim
-## Last update Wed Jan 28 11:03:04 2015 Arthur Amstutz
+## Last update Wed Jan 28 12:35:36 2015 Arthur Amstutz
 ##
 
 CC	=	gcc
@@ -21,6 +21,7 @@ NAME	=	libmy_malloc_$(HOSTTYPE).so
 SRCS	=	malloc.c \
 		align.c \
 		list.c \
+		free.c \
 
 OBJS	=	$(SRCS:.c=.o)
 
