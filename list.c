@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Jan 27 17:26:52 2015 raphael elkaim
+** Last update Tue Jan 27 18:29:53 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -61,7 +61,8 @@ void		*insert(size_t size)
 	{
 	  new = tmp->ptr_begin + 1 + size;
 	  new->ptr_begin = tmp->ptr_begin + 1 + size + sizeof(t_list);
-	  new->ptr_end = new->ptr_begin + size;
+	  new->ptr_end = tmp->ptr_end;
+	  printf("ptr begin:%p\nptr end:%p\n", new->ptr_begin,new->ptr_end);
 	  new->isFree = true;
 	  new->next = tmp->next;
 	  tmp->ptr_end = new->ptr_begin - 1 - sizeof(t_list);
@@ -78,12 +79,15 @@ t_bool		add_memory_end()
 {
   t_list	*tmp;
 
+  //  printf("JE RETIRE MES LUNETTES\n");
   if (sbrk(4096) == (void *)-1)
     return (false);
-  tmp = g_mem = g_startheap;
-  if (g_mem == g_startheap)
+  //printf("JE RETIRE MES LUNETTES\n");
+  tmp = g_mem;
+  if (g_mem == NULL)
     {
-      g_mem->ptr_begin = g_mem + sizeof(t_list);
+      g_mem = g_startheap;
+      g_mem->ptr_begin = g_mem + sizeof(t_list) + 1;
       g_mem->ptr_end = g_mem + 4096;
       g_mem->isFree = true;
       g_mem->next = 0;
@@ -91,6 +95,6 @@ t_bool		add_memory_end()
     }
   while (tmp->next != NULL)
     tmp = tmp->next;
-  tmp->ptr_end += 4096;
+  tmp->ptr_end = (void *)(tmp->ptr_end + 4096);
   return (true);
 }
