@@ -5,7 +5,7 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 16:12:18 2015 raphael elkaim
-** Last update Wed Jan 28 12:39:00 2015 Arthur Amstutz
+** Last update Wed Jan 28 15:31:57 2015 raphael elkaim
 */
 
 #ifndef MY_MALLOC_H_
@@ -16,6 +16,7 @@
 extern void	*g_startheap;
 extern t_list	*g_mem;
 
-void *align(void *ptr);
+void		*align(void *ptr);
+void		fake_free(void *ptr);
 
 #endif /* !MY_MALLOC_H_ */

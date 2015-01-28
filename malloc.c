@@ -5,13 +5,15 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 14:52:18 2015 raphael elkaim
+** Last update Wed Jan 28 15:48:26 2015 raphael elkaim
 */
 
 #include <unistd.h>
 #include <stddef.h>
 #include <stdio.h>
-#include "align.h"
+#include <string.h>
+//#include "align.h"
+#include "my_malloc.h"
 #include "list.h"
 
 void	*g_startheap = 0;
@@ -32,9 +34,36 @@ void	*malloc(size_t size)
   return (res);
 }
 
-void	*realloc(void *ptr, size_t size)
+void		*fake_malloc(size_t size)
 {
-  (void)size;
-  (void)ptr;
-  return (0);
+ void		*res;
+
+  if (!g_startheap)
+    g_startheap = sbrk(0);
+  while ((res = insert(size)) == 0)
+    {
+      if (add_memory_end() == false)
+	return (0);
+    }
+  return (res);
+}
+
+void		*realloc(void *ptr, size_t size)
+{
+  t_list	*tmp;
+  void		*nptr;
+
+  tmp = g_mem;
+  while (tmp)
+    {
+      if (tmp->ptr_begin == ptr)
+	{
+	  nptr = fake_malloc(size);
+	  memcpy(nptr, tmp->ptr_begin, size);
+	  fake_free(ptr);
+	  return (nptr);
+	}
+      tmp = tmp->next;
+    }
+  return (ptr);
 }
