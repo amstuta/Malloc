@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Wed Jan 28 14:12:24 2015 raphael elkaim
+** Last update Thu Jan 29 17:03:19 2015 Arthur Amstutz
 */
 
 #include <unistd.h>
@@ -59,23 +59,14 @@ void		*insert(size_t size)
       if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + sizeof(t_list)) \
 	  && tmp->isFree == true)
 	{
-	  //	  printf("heya\n");
 	  new = tmp->ptr_begin + size /*+ 1*/;
-	  //printf("size:%ld\nsize needed:%ld", (tmp->ptr_end - tmp->ptr_begin) / 32, (size + sizeof(t_list)));
 	  new->ptr_begin = tmp->ptr_begin + size  + sizeof(t_list);
-	  //printf("yohoho\n");
 	  new->ptr_end = tmp->ptr_end;
-	  //	  printf("new size:%ld\nnew size needed:%ld\n", (new->ptr_end - new->ptr_begin), (size + sizeof(t_list)));
-	  //printf("ptr begin:%p\nptr end:%p\n", new->ptr_begin,new->ptr_end);
 	  new->isFree = true;
 	  new->next = tmp->next;
-	  //printf("gotta boom!\n");
 	  tmp->ptr_end = new->ptr_begin - sizeof(t_list);
 	  tmp->isFree = false;
 	  tmp->next = new;
-	  //printf("old size:%ld\nold size needed:%ld\n", (tmp->ptr_end - tmp->ptr_begin), (size + sizeof(t_list)));
-	  //printf("yolo\n");
-	  //printf("size:%ld\nsize needed:%ld", (tmp->ptr_end - tmp->ptr_begin) / 32, (size + sizeof(t_list)));
 	  return (tmp->ptr_begin);
 	}
       tmp = tmp->next;
@@ -88,28 +79,20 @@ t_bool		add_memory_end()
   t_list	*tmp;
   void *ret;
 
-  //  printf("salut\n");
-  //  printf("JE RETIRE MES LUNETTES\n");
-  if ((ret = sbrk(4096)) == (void *)-1)
+  if ((ret = sbrk(8192)) == (void *)-1)
     return (false);
-  //printf("JE RETIRE MES LUNETTES\n");
   tmp = g_mem;
   if (g_mem == NULL)
     {
-      //      brk(g_startheap + 4096);
       g_mem = g_startheap;
       g_mem->ptr_begin = g_startheap + sizeof(t_list);
-      g_mem->ptr_end = g_startheap + 4096;
+      g_mem->ptr_end = g_startheap + 8192;
       g_mem->isFree = true;
       g_mem->next = 0;
-      //printf("size:%ld\n", g_mem->ptr_end - g_mem->ptr_begin);
       return (true);
     }
-  //printf("hello\n");
   while (tmp->next != NULL)
     tmp = tmp->next;
-  //printf("hello\n");
-  //brk(tmp->ptr_end + 4096);
-  tmp->ptr_end = tmp->ptr_end + 4096;
+  tmp->ptr_end = tmp->ptr_end + 8192;
   return (true);
 }

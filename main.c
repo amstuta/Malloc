@@ -5,23 +5,27 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:59:04 2015 raphael elkaim
-** Last update Wed Jan 28 17:08:10 2015 raphael elkaim
+** Last update Thu Jan 29 17:06:44 2015 Arthur Amstutz
 */
 
 void show_alloc_mem();
 
+#include <string.h>
+
 int main()
 {
   int i = 0;
-  int b = 0;
+  //int b = 0;
   char *test;
+
+  /*
   srandom(time(0));
   malloc(0);
   test = malloc(120);
   malloc(4);
   free(test);
   calloc(10, 1);
-  malloc(40000);
+  malloc(40000);*/
   /*  for (i = 0;i < 10;i++)
     {
       test = malloc(7);
@@ -30,5 +34,12 @@ int main()
       printf("%s\n", test);
       //      free(test);
       }*/
+
+  
+  char *a = "tameresucepourdesbananes";
+  char *b = strdup(a);
+  
+  printf("b: %s\n", b);
+
   show_alloc_mem();
 }

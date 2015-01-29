@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Wed Jan 28 12:26:26 2015 Arthur Amstutz
-** Last update Wed Jan 28 16:23:14 2015 raphael elkaim
+** Last update Thu Jan 29 17:02:03 2015 Arthur Amstutz
 */
 
 #include <stddef.h>
@@ -23,10 +23,10 @@ void		suppress_mem()
     {
       tmp = tmp->next;
     }
-  while ((tmp->ptr_begin - tmp->ptr_end) > 4096 && tmp->isFree && tmp != g_mem)
+  while ((tmp->ptr_begin - tmp->ptr_end) > 8192 && tmp->isFree && tmp != g_mem)
     {
-      sbrk(-4096);
-      tmp->ptr_end = tmp->ptr_end - 4096;
+      sbrk(-8192);
+      tmp->ptr_end = tmp->ptr_end - 8192;
     }
   /*  if (tmp == g_mem && tmp->isFree)
     {
