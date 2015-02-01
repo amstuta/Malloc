@@ -25,5 +25,11 @@ echo "${green}testing the mighty moulinette:${reset}"
 echo "${green}some more basic tests:${reset}\n creating file \"your mom\""
 touch yourmom
 rm -v yourmom
+echo "${green}running a new bash command shell!:${reset}"
+bash
+echo "${green}when shit starts going down:testing emacs:${reset}"
+emacs -nw randomfilewedontcareaboutbutitbetterwork || echo "${red}fuck it >:(${reset}"
+echo "${green}aaaand the final boss:ruby${reset}"
+(echo PLEASE | ruby &> /dev/null && echo "${green}IT FUCKING WORKED${reset}") || echo "${red}FUCK${reset}"
 echo "${green}setting everything back to normal!${reset}"
 unset LD_PRELOAD

@@ -66,9 +66,9 @@ void		*realloc(void *ptr, size_t size)
   void		*nptr;
 
   tmp = g_mem;
-  if (!ptr)
+  if (!ptr && size)
     return (fake_malloc(size));
-  if (!size)
+  if (!size && ptr)
     {
       fake_free(ptr);
       return (0);
@@ -78,7 +78,7 @@ void		*realloc(void *ptr, size_t size)
       if (tmp->ptr_begin == ptr)
 	{
 	  nptr = fake_malloc(size);
-	  if (size > (unsigned long)(tmp->ptr_end - tmp->ptr_begin))
+	  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin))
 	    memcpy(nptr, tmp->ptr_begin, tmp->ptr_end - tmp->ptr_begin);
 	  else
 	    memcpy(nptr, tmp->ptr_begin, size);
