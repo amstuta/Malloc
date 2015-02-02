@@ -18,11 +18,11 @@ void		show_alloc_mem()
 {
   int		size;
   t_list	*tmp;
-
+  int i = 0;
   tmp = g_mem;
+  printf("break : %p\n", g_startheap);
   if (tmp == NULL)
     return ;
-  printf("break : %p\n", g_startheap);
   while (tmp != NULL)
     {
       if (!tmp->isFree)
@@ -31,7 +31,9 @@ void		show_alloc_mem()
 	  printf("%p - %p : %d octets\n", tmp->ptr_begin, tmp->ptr_end, size);
 	}
       tmp = tmp->next;
+      ++i;
     }
+  printf("the list size is:%d\n", i);
 }
 
 void		delete_at_back()
@@ -65,7 +67,7 @@ void		*insert(size_t size)
 	  new->ptr_end = tmp->ptr_end;
 	  new->isFree = true;
 	  new->next = tmp->next;
-	  tmp->ptr_end = new->ptr_begin - sizeof(t_list);
+	  tmp->ptr_end = new->ptr_begin - sizeof(t_list) - (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list));
 	  tmp->isFree = false;
 	  tmp->next = new;
 	  return (tmp->ptr_begin);

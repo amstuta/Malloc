@@ -29,18 +29,19 @@ int main()
   //malloc(40000);*/
     for (i = 0;i < 100;i++)
     {
-      test = malloc(random() % 400);
-      if ((unsigned long)test % 16 == 0)
-	++d;
+      test = malloc(100);
+      //if ((unsigned long)test % 16 == 0)
+      //++d;
+      free(test);
       //      free(test);
     }
     printf("aligned %d/100 times!\n", d);
 
   
   char *a = "tameresucepourdesbananes";
-  char *b = strdup(a);
+  //char *b = strdup(a);
   
-  printf("b: %s\n", b);
+  //printf("b: %s\n", b);
 
-  //  show_alloc_mem();
+   show_alloc_mem();
 }

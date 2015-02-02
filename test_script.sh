@@ -12,7 +12,7 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 echo "${green}recompiling the project${reset}"
-(make && echo "${green}succesfully recompiled the project${reset}") || (echo "${red}compilation failed :(${reset}" && exit 1)
+make && echo "${green}succesfully recompiled the project${reset}" || (echo "${red}compilation failed :(${reset}";exit 1)
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:./malloc/" && echo "${green}setting up the library path${reset}"
 echo "${green}recompiling the test main${reset}"
 (gcc main.c -lmy_malloc -L./ && echo "${green}done!${reset}") || (echo "failed :(" && exit 1)
@@ -30,7 +30,5 @@ echo "${green}running a new bash command shell!:${reset}"
 bash
 echo "${green}when shit starts going down:testing emacs:${reset}"
 emacs -nw randomfilewedontcareaboutbutitbetterwork || echo "${red}fuck it >:(${reset}"
-echo "${green}aaaand the final boss:ruby${reset}"
-(ruby && echo "${green}IT FUCKING WORKED${reset}") || echo "${red}FUCK${reset}"
 echo "${green}setting everything back to normal!${reset}"
 unset LD_PRELOAD

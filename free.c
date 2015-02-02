@@ -14,36 +14,35 @@
 #include "my_malloc.h"
 #include "list.h"
 
-void		suppress_mem()
+void		suppress_mem(t_list *elem)
 {
-  t_list	*tmp;
-
-  tmp = g_mem;
-  while (tmp->next)
-    {
-      tmp = tmp->next;
-    }
-  while ((tmp->ptr_begin - tmp->ptr_end) > 8192 && tmp->isFree && tmp != g_mem)
+  while ((elem->ptr_end - elem->ptr_begin) > 8192 && elem->isFree)
     {
       sbrk(-8192);
-      tmp->ptr_end = tmp->ptr_end - 8192;
+      elem->ptr_end = elem->ptr_end - 8192;
     }
-  /*  if (tmp == g_mem && tmp->isFree)
+  if (elem == g_mem && (unsigned long)(elem->ptr_end - elem->ptr_begin) == 8192 - (unsigned long)align(g_startheap) - sizeof(t_list))
     {
-
-    }*/
+      brk(g_startheap);
+      g_mem = NULL;
+    }
 }
 
 void		free(void *ptr)
 {
   t_list	*tmp;
-
+  
   tmp = g_mem;
   while (tmp->next != NULL)
     {
       if (tmp->next->ptr_begin == ptr)
 	{
 	  tmp->next->isFree = true;
+	  break ;
+	}
+      else if (tmp == g_mem && tmp->ptr_begin == ptr)
+	{
+	  tmp->isFree = true;
 	  break ;
 	}
       tmp = tmp->next;
@@ -54,44 +53,63 @@ void		free(void *ptr)
 	{
 	  tmp->ptr_end = tmp->next->ptr_end;
 	  tmp->next = tmp->next->next;
+	  if (tmp->isFree && tmp->next && tmp->next->isFree)
+	    {
+	      tmp->ptr_end = tmp->next->ptr_end;
+	      tmp->next = tmp->next->next;
+	    }
 	}
-      if (tmp->isFree && tmp->next->isFree)
+      else if (tmp->next && tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
 	{
-	  tmp->ptr_end = tmp->next->ptr_end;
-	  tmp->next = tmp->next->next;
-	}
-      else if (tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
-	{
-	  tmp->ptr_end = tmp->next->ptr_end;
-	  tmp->next = tmp->next->next;
+	  tmp->next->ptr_end = tmp->next->next->ptr_end;
+	  tmp->next->next = tmp->next->next->next;
 	}
     }
-  //suppress_mem();
+  if (tmp && !tmp->next)
+    suppress_mem(tmp);
+  else if (tmp && tmp->next && !tmp->next->next)
+    suppress_mem(tmp->next);
 }
 
 void		fake_free(void *ptr)
 {
   t_list	*tmp;
-
+  
   tmp = g_mem;
-  while (tmp != NULL)
+  while (tmp->next != NULL)
     {
-      if (tmp->ptr_begin == ptr)
+      if (tmp->next->ptr_begin == ptr)
+	{
+	  tmp->next->isFree = true;
+	  break ;
+	}
+      else if (tmp == g_mem && tmp->ptr_begin == ptr)
 	{
 	  tmp->isFree = true;
 	  break ;
 	}
       tmp = tmp->next;
     }
-  tmp = g_mem;
-  while (tmp != NULL && tmp->next != NULL)
+  if (tmp != NULL && tmp->next != NULL)
     {
       if (tmp->isFree && tmp->next->isFree)
 	{
 	  tmp->ptr_end = tmp->next->ptr_end;
 	  tmp->next = tmp->next->next;
+	  if (tmp->isFree && tmp->next && tmp->next->isFree)
+	    {
+	      tmp->ptr_end = tmp->next->ptr_end;
+	      tmp->next = tmp->next->next;
+	    }
 	}
-      tmp = tmp->next;
+      else if (tmp->next && tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
+	{
+	  tmp->next->ptr_end = tmp->next->next->ptr_end;
+	  tmp->next->next = tmp->next->next->next;
+	}
     }
-  suppress_mem();
+  if (tmp && !tmp->next)
+    suppress_mem(tmp);
+  else if (tmp && tmp->next && !tmp->next->next)
+    suppress_mem(tmp->next);
 }

@@ -30,7 +30,10 @@ void		*malloc(size_t size)
   while ((res = insert(size)) == 0)
     {
       if (add_memory_end() == false)
-	return (0);
+	{
+	  printf("nani\n");
+	  return (0);
+	}
     }
   return (res);
 }
@@ -46,7 +49,10 @@ void		*fake_malloc(size_t size)
   while ((res = insert(size)) == 0)
     {
       if (add_memory_end() == false)
-	return (0);
+	{
+	  printf("nani\n");
+	  return (0);
+	}
     }
   return (res);
 }
