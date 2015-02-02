@@ -39,26 +39,34 @@ void		free(void *ptr)
   t_list	*tmp;
 
   tmp = g_mem;
-  while (tmp != NULL)
+  while (tmp->next != NULL)
     {
-      if (tmp->ptr_begin == ptr)
+      if (tmp->next->ptr_begin == ptr)
 	{
-	  tmp->isFree = true;
+	  tmp->next->isFree = true;
 	  break ;
 	}
       tmp = tmp->next;
     }
-  tmp = g_mem;
-  while (tmp != NULL && tmp->next != NULL)
+  if (tmp != NULL && tmp->next != NULL)
     {
       if (tmp->isFree && tmp->next->isFree)
 	{
 	  tmp->ptr_end = tmp->next->ptr_end;
 	  tmp->next = tmp->next->next;
 	}
-      tmp = tmp->next;
+      if (tmp->isFree && tmp->next->isFree)
+	{
+	  tmp->ptr_end = tmp->next->ptr_end;
+	  tmp->next = tmp->next->next;
+	}
+      else if (tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
+	{
+	  tmp->ptr_end = tmp->next->ptr_end;
+	  tmp->next = tmp->next->next;
+	}
     }
-  suppress_mem();
+  //suppress_mem();
 }
 
 void		fake_free(void *ptr)

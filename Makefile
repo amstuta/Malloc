@@ -14,9 +14,9 @@ RM	=	rm -f
 
 CFLAGS	+=	-Wextra -Wall -Werror -fPIC
 
-LDFLAGS	=	-shared
-
 NAME	=	libmy_malloc_$(HOSTTYPE).so
+
+LDFLAGS	=	-shared -Wl,-soname,$(NAME)
 
 SRCS	=	malloc.c \
 		align.c \

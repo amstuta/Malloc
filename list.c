@@ -56,11 +56,12 @@ void		*insert(size_t size)
   tmp = g_mem;
   while (tmp != NULL)
     {
-      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + sizeof(t_list)) \
+      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
 	  && tmp->isFree == true)
 	{
 	  new = tmp->ptr_begin + size /*+ 1*/;
-	  new->ptr_begin = tmp->ptr_begin + size  + sizeof(t_list);
+	  new->ptr_begin = tmp->ptr_begin + size + sizeof(t_list);
+	  new->ptr_begin = new->ptr_begin + (unsigned long)align(new->ptr_begin);
 	  new->ptr_end = tmp->ptr_end;
 	  new->isFree = true;
 	  new->next = tmp->next;
@@ -85,7 +86,7 @@ t_bool		add_memory_end()
   if (g_mem == NULL)
     {
       g_mem = g_startheap;
-      g_mem->ptr_begin = g_startheap + sizeof(t_list);
+      g_mem->ptr_begin = g_startheap + sizeof(t_list) + (unsigned long)align(g_startheap);
       g_mem->ptr_end = g_startheap + 8192;
       g_mem->isFree = true;
       g_mem->next = 0;

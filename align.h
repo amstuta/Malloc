@@ -11,6 +11,6 @@
 #ifndef ALIGN_H_
 # define ALIGN_H_
 
-void *align(void *ptr);
+void	*align(void *ptr);
 
 #endif /* !ALIGN_H_ */

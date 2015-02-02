@@ -8,17 +8,17 @@
 ** Last update Tue Jan 27 16:11:20 2015 raphael elkaim
 */
 
-static void	*on_16(long ptr)
+static long	on_16(long ptr)
 {
-  int		i;
+  long		i;
 
   i = 0;
   while ((ptr + i) % 16)
     ++i;
-  return ((void *)(ptr + i));
+  return (i);
 }
 
 void	*align(void *ptr)
 {
-  return (on_16((long)ptr));
+  return ((void*)on_16((long)ptr));
 }

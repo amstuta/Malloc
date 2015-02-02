@@ -14,26 +14,27 @@ void show_alloc_mem();
 
 int main()
 {
+  int d = 0;
   int i = 0;
   //int b = 0;
   char *test;
 
-  /*
+  
   srandom(time(0));
-  malloc(0);
-  test = malloc(120);
-  malloc(4);
-  free(test);
-  calloc(10, 1);
-  malloc(40000);*/
-  /*  for (i = 0;i < 10;i++)
+  //malloc(0);
+  //test = malloc(120);
+  //malloc(4);
+  //free(test);
+  //calloc(10, 1);
+  //malloc(40000);*/
+    for (i = 0;i < 100;i++)
     {
-      test = malloc(7);
-      strcpy(test, "salut!");
-      test[6] = 0;
-      printf("%s\n", test);
+      test = malloc(random() % 400);
+      if ((unsigned long)test % 16 == 0)
+	++d;
       //      free(test);
-      }*/
+    }
+    printf("aligned %d/100 times!\n", d);
 
   
   char *a = "tameresucepourdesbananes";
@@ -41,5 +42,5 @@ int main()
   
   printf("b: %s\n", b);
 
-  show_alloc_mem();
+  //  show_alloc_mem();
 }

@@ -89,3 +89,15 @@ void		*realloc(void *ptr, size_t size)
     }
   return (nptr);
 }
+
+/*void *mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t off)
+{
+  (void)addr;
+  (void)len;
+  (void)prot;
+  (void)flags;
+  (void)fildes;
+  (void)off;
+  printf("HOLY SHIT IT WAS THIS ALL ALONG\n");
+  return (0);
+  }*/
