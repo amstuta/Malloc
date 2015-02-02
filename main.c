@@ -1,5 +1,3 @@
-
-
 /*
 ** main.c for  in /home/elkaim_r/projects/malloc
 ** 
