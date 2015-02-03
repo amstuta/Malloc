@@ -5,12 +5,13 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Thu Jan 29 17:03:19 2015 Arthur Amstutz
+** Last update Tue Feb  3 16:25:07 2015 raphael elkaim
 */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <pthread.h>
 #include "list.h"
 #include "my_malloc.h"
 
@@ -61,7 +62,7 @@ void		*insert(size_t size)
       if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
 	  && tmp->isFree == true)
 	{
-	  new = tmp->ptr_begin + size /*+ 1*/;
+	  new = tmp->ptr_begin + size;
 	  new->ptr_begin = tmp->ptr_begin + size + sizeof(t_list);
 	  new->ptr_begin = new->ptr_begin + (unsigned long)align(new->ptr_begin);
 	  new->ptr_end = tmp->ptr_end;
@@ -80,7 +81,7 @@ void		*insert(size_t size)
 t_bool		add_memory_end()
 {
   t_list	*tmp;
-  void *ret;
+  void		*ret;
 
   if ((ret = sbrk(8192)) == (void *)-1)
     return (false);

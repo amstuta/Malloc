@@ -30,8 +30,8 @@ int main()
     for (i = 0;i < 100;i++)
     {
       test = malloc(100);
-      //if ((unsigned long)test % 16 == 0)
-      //++d;
+      if ((unsigned long)test % 16 == 0)
+	++d;
       free(test);
       //      free(test);
     }
@@ -39,9 +39,10 @@ int main()
 
   
   char *a = "tameresucepourdesbananes";
-  //char *b = strdup(a);
-  
+  char *b = strdup(a);
+  show_alloc_mem();
+  b = realloc(b, 3);
+  printf("%s\n", b);
+  show_alloc_mem();
   //printf("b: %s\n", b);
-
-   show_alloc_mem();
 }
