@@ -13,6 +13,7 @@
 
 #include "list.h"
 
+extern pthread_mutex_t g_mut;
 extern void	*g_startheap;
 extern t_list	*g_mem;
 

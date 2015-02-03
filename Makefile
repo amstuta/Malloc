@@ -12,7 +12,7 @@ CC	=	gcc
 
 RM	=	rm -f
 
-CFLAGS	+=	-Wextra -Wall -Werror -fPIC
+CFLAGS	=	-Wextra -Wall -Werror -fPIC -lpthread
 
 NAME	=	libmy_malloc_$(HOSTTYPE).so
 

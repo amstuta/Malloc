@@ -11,6 +11,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "my_malloc.h"
 #include "list.h"
 
@@ -31,8 +32,9 @@ void		suppress_mem(t_list *elem)
 void		free(void *ptr)
 {
   t_list	*tmp;
-  
+
   tmp = g_mem;
+  pthread_mutex_lock(&g_mut);  
   while (tmp->next != NULL)
     {
       if (tmp->next->ptr_begin == ptr)
@@ -69,13 +71,15 @@ void		free(void *ptr)
     suppress_mem(tmp);
   else if (tmp && tmp->next && !tmp->next->next)
     suppress_mem(tmp->next);
+  pthread_mutex_unlock(&g_mut);
 }
 
 void		fake_free(void *ptr)
 {
-  t_list	*tmp;
-  
+    t_list	*tmp;
+
   tmp = g_mem;
+  pthread_mutex_lock(&g_mut);  
   while (tmp->next != NULL)
     {
       if (tmp->next->ptr_begin == ptr)
@@ -112,4 +116,6 @@ void		fake_free(void *ptr)
     suppress_mem(tmp);
   else if (tmp && tmp->next && !tmp->next->next)
     suppress_mem(tmp->next);
+  pthread_mutex_unlock(&g_mut);
+
 }
