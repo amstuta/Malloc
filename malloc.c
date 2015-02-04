@@ -10,7 +10,6 @@
 
 #include <unistd.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <string.h>
 #include <pthread.h>
 #include "my_malloc.h"
@@ -89,30 +88,15 @@ void		*realloc(void *ptr, size_t size)
 
   tmp = g_mem;
   if (!ptr && size)
-    {
-      pthread_mutex_lock(&g_mut);
-      nptr = fake_malloc(size);
-      pthread_mutex_unlock(&g_mut);
-      return (nptr);
-    }
+    return (safe_malloc(size));
   if ((long)size <= 0 && ptr)
-    {
-      pthread_mutex_lock(&g_mut);
-      fake_free(ptr);
-      pthread_mutex_unlock(&g_mut);
-      return (0);
-    }
+    return (safe_free(ptr));
   pthread_mutex_lock(&g_mut);  
   while (tmp)
     {
       if (tmp->ptr_begin == ptr)
 	{
-	  nptr = fake_malloc(size);
-	  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin) && nptr)
-	    memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
-	  else if (nptr)
-	    nptr = memcpy(nptr, tmp->ptr_begin, size);
-	  fake_free(ptr);
+	  nptr = change_mem_size(tmp, size);
 	  break ;
 	}
       tmp = tmp->next;
@@ -121,14 +105,33 @@ void		*realloc(void *ptr, size_t size)
   return (nptr);
 }
 
-/*void *mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t off)
+void	*safe_malloc(size_t size)
 {
-  (void)addr;
-  (void)len;
-  (void)prot;
-  (void)flags;
-  (void)fildes;
-  (void)off;
-  printf("HOLY SHIT IT WAS THIS ALL ALONG\n");
-  return (fake_malloc(len));
-x  }*/
+  void	*nptr;
+  
+  pthread_mutex_lock(&g_mut);
+  nptr = fake_malloc(size);
+  pthread_mutex_unlock(&g_mut);
+  return (nptr);
+}
+
+void	*safe_free(void *ptr)
+{  
+  pthread_mutex_lock(&g_mut);
+  fake_free(ptr);
+  pthread_mutex_unlock(&g_mut);
+  return (0);
+}
+
+void	*change_mem_size(t_list *tmp, size_t size)
+{
+  void	*nptr;
+
+  nptr = fake_malloc(size);
+  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin) && nptr)
+    memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
+  else if (nptr)
+    memcpy(nptr, tmp->ptr_begin, size);
+  fake_free(tmp->ptr_begin);
+  return (nptr);
+}

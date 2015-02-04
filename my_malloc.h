@@ -18,6 +18,10 @@ extern void	*g_startheap;
 extern t_list	*g_mem;
 
 void		*align(void *ptr);
+void		*safe_malloc(size_t size);
+void		*safe_free(void *ptr);
+void		*change_mem_size(t_list *, size_t);
 void		fake_free(void *ptr);
+
 
 #endif /* !MY_MALLOC_H_ */
