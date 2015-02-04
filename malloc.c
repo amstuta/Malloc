@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Feb  4 17:07:06 2015 raphael elkaim
+** Last update Wed Feb  4 17:23:46 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -16,9 +16,9 @@
 #include "my_malloc.h"
 #include "list.h"
 
-pthread_mutex_t	g_mut = PTHREAD_MUTEX_INITIALIZER; 
-void	*g_startheap = 0;
-t_list	*g_mem = 0;
+pthread_mutex_t	g_mut = PTHREAD_MUTEX_INITIALIZER;
+void		*g_startheap = 0;
+t_list		*g_mem = 0;
 
 void		*malloc(size_t size)
 {
@@ -66,7 +66,6 @@ void		*fake_malloc(size_t size)
 	return (0);
     }
   return (res);
-
 }
 
 void		*calloc(size_t size, size_t size2)
@@ -108,16 +107,11 @@ void		*realloc(void *ptr, size_t size)
     {
       if (tmp->ptr_begin == ptr)
 	{
-	  //	  find_alloc(tmp);
 	  nptr = fake_malloc(size);
 	  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin) && nptr)
-	    {
-	      nptr = memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
-	    }
+	    memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
 	  else if (nptr)
-	    {
-	      nptr = memcpy(nptr, tmp->ptr_begin, size);
-	    }
+	    nptr = memcpy(nptr, tmp->ptr_begin, size);
 	  fake_free(ptr);
 	  break ;
 	}
