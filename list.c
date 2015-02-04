@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Wed Feb  4 17:06:43 2015 raphael elkaim
+** Last update Wed Feb  4 17:40:41 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -57,7 +57,6 @@ void		*insert(size_t size)
   t_list	*new;
 
   tmp = g_mem;
-  printf("OH NOOOOO\n");
   while (tmp != NULL)
     {
       if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + 1 + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
