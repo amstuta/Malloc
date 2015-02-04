@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Tue Feb  3 16:25:07 2015 raphael elkaim
+** Last update Wed Feb  4 17:06:43 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -36,7 +36,7 @@ void		show_alloc_mem()
     }
   printf("the list size is:%d\n", i);
 }
-
+/*
 void		delete_at_back()
 {
   t_list	*tmp;
@@ -49,7 +49,7 @@ void		delete_at_back()
   while (tmp->next->next != NULL)
     tmp = tmp->next;
   tmp->next->isFree = true;
-}
+  }*/
 
 void		*insert(size_t size)
 {
@@ -57,9 +57,10 @@ void		*insert(size_t size)
   t_list	*new;
 
   tmp = g_mem;
+  printf("OH NOOOOO\n");
   while (tmp != NULL)
     {
-      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
+      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + 1 + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
 	  && tmp->isFree == true)
 	{
 	  new = tmp->ptr_begin + size;

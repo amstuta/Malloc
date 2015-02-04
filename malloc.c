@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Tue Feb  3 16:32:12 2015 raphael elkaim
+** Last update Wed Feb  4 17:07:06 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -24,16 +24,13 @@ void		*malloc(size_t size)
 {
   void		*res;
 
+  if ((long)size <= 0)
+    return (0);
   pthread_mutex_lock(&g_mut);
-  if (!size)
-    {
-      pthread_mutex_unlock(&g_mut);
-      return (0);
-    }
-  if ((long)g_startheap <= 0)
+  if ((long long)g_startheap <= 0)
     {
       g_startheap = sbrk(0);
-      if ((long)g_startheap <= 0)
+      if ((long long)g_startheap <= 0)
 	{
 	  pthread_mutex_unlock(&g_mut);
 	  return  (NULL);
@@ -55,12 +52,12 @@ void		*fake_malloc(size_t size)
 {
   void		*res;
   
-  if (!size)
+  if ((long)size <= 0)
     return (0);
-  if (!g_startheap/*(long)g_startheap <= 0*/)
+  if (!g_startheap || (long long)g_startheap <= 0)
     {
       g_startheap = sbrk(0);
-      if ((long)g_startheap <= 0)
+      if ((long long)g_startheap <= 0)
 	return  (NULL);
     }
   while ((res = insert(size)) == 0)
@@ -76,10 +73,12 @@ void		*calloc(size_t size, size_t size2)
 {
   void		*ptr;
 
+  if ((long long)(size * size2) <= 0)
+    return (0);
   pthread_mutex_lock(&g_mut);
   ptr = fake_malloc(size * size2);
   if (ptr && ptr != g_startheap)
-    memset(ptr, 0, size * size2);
+    ptr = memset(ptr, 0, size * size2);
   pthread_mutex_unlock(&g_mut);
   return (ptr);
 }
@@ -97,12 +96,12 @@ void		*realloc(void *ptr, size_t size)
       pthread_mutex_unlock(&g_mut);
       return (nptr);
     }
-  if (!size && ptr)
+  if ((long)size <= 0 && ptr)
     {
       pthread_mutex_lock(&g_mut);
       fake_free(ptr);
       pthread_mutex_unlock(&g_mut);
-      return (g_startheap);
+      return (0);
     }
   pthread_mutex_lock(&g_mut);  
   while (tmp)
@@ -113,11 +112,11 @@ void		*realloc(void *ptr, size_t size)
 	  nptr = fake_malloc(size);
 	  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin) && nptr)
 	    {
-	      memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
+	      nptr = memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
 	    }
 	  else if (nptr)
 	    {
-	      memcpy(nptr, tmp->ptr_begin, size);
+	      nptr = memcpy(nptr, tmp->ptr_begin, size);
 	    }
 	  fake_free(ptr);
 	  break ;
@@ -138,4 +137,4 @@ void		*realloc(void *ptr, size_t size)
   (void)off;
   printf("HOLY SHIT IT WAS THIS ALL ALONG\n");
   return (fake_malloc(len));
-  }*/
+x  }*/

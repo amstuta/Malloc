@@ -5,12 +5,12 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 13:59:23 2015 raphael elkaim
-** Last update Tue Jan 27 16:11:20 2015 raphael elkaim
+** Last update Wed Feb  4 13:23:35 2015 raphael elkaim
 */
 
-static long	on_16(long ptr)
+static long long	on_16(long long ptr)
 {
-  long		i;
+  long long		i;
 
   i = 0;
   while ((ptr + i) % 16)
@@ -20,5 +20,5 @@ static long	on_16(long ptr)
 
 void	*align(void *ptr)
 {
-  return ((void*)on_16((long)ptr));
+  return ((void*)on_16((long long)ptr));
 }

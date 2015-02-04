@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Wed Jan 28 12:26:26 2015 Arthur Amstutz
-** Last update Thu Jan 29 17:02:03 2015 Arthur Amstutz
+** Last update Wed Feb  4 13:23:02 2015 raphael elkaim
 */
 
 #include <stddef.h>
@@ -35,7 +35,7 @@ void		free(void *ptr)
 
   tmp = g_mem;
   pthread_mutex_lock(&g_mut);  
-  while (tmp->next != NULL)
+  while (tmp && tmp->next != NULL)
     {
       if (tmp->next->ptr_begin == ptr)
 	{
@@ -76,10 +76,10 @@ void		free(void *ptr)
 
 void		fake_free(void *ptr)
 {
-    t_list	*tmp;
+  t_list	*tmp;
 
   tmp = g_mem;
-  while (tmp->next != NULL)
+  while (tmp && tmp->next != NULL)
     {
       if (tmp->next->ptr_begin == ptr)
 	{
