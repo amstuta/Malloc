@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Wed Jan 28 12:26:26 2015 Arthur Amstutz
-** Last update Thu Feb  5 12:56:53 2015 raphael elkaim
+** Last update Thu Feb  5 14:32:58 2015 raphael elkaim
 */
 
 #include <stddef.h>
@@ -35,39 +35,9 @@ void		free(void *ptr)
   t_list	*tmp;
 
   tmp = g_mem;
-  pthread_mutex_lock(&g_mut);  
-  while (tmp && tmp->next != NULL)
-    {
-      if (tmp->next->ptr_begin == ptr)
-	{
-	  tmp->next->isFree = true;
-	  break ;
-	}
-      else if (tmp == g_mem && tmp->ptr_begin == ptr)
-	{
-	  tmp->isFree = true;
-	  break ;
-	}
-      tmp = tmp->next;
-    }
-  if (tmp != NULL && tmp->next != NULL)
-    {
-      if (tmp->isFree && tmp->next->isFree)
-	{
-	  tmp->ptr_end = tmp->next->ptr_end;
-	  tmp->next = tmp->next->next;
-	  if (tmp->isFree && tmp->next && tmp->next->isFree)
-	    {
-	      tmp->ptr_end = tmp->next->ptr_end;
-	      tmp->next = tmp->next->next;
-	    }
-	}
-      else if (tmp->next && tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
-	{
-	  tmp->next->ptr_end = tmp->next->next->ptr_end;
-	  tmp->next->next = tmp->next->next->next;
-	}
-    }
+  pthread_mutex_lock(&g_mut);
+  tmp = find_mem_to_free(ptr);
+  merge_memory(tmp);
   if (tmp && !tmp->next)
     suppress_mem(tmp);
   else if (tmp && tmp->next && !tmp->next->next)
@@ -80,38 +50,8 @@ void		fake_free(void *ptr)
   t_list	*tmp;
 
   tmp = g_mem;
-  while (tmp && tmp->next != NULL)
-    {
-      if (tmp->next->ptr_begin == ptr)
-	{
-	  tmp->next->isFree = true;
-	  break ;
-	}
-      else if (tmp == g_mem && tmp->ptr_begin == ptr)
-	{
-	  tmp->isFree = true;
-	  break ;
-	}
-      tmp = tmp->next;
-    }
-  if (tmp != NULL && tmp->next != NULL)
-    {
-      if (tmp->isFree && tmp->next->isFree)
-	{
-	  tmp->ptr_end = tmp->next->ptr_end;
-	  tmp->next = tmp->next->next;
-	  if (tmp->isFree && tmp->next && tmp->next->isFree)
-	    {
-	      tmp->ptr_end = tmp->next->ptr_end;
-	      tmp->next = tmp->next->next;
-	    }
-	}
-      else if (tmp->next && tmp->next->isFree && tmp->next->next && tmp->next->next->isFree)
-	{
-	  tmp->next->ptr_end = tmp->next->next->ptr_end;
-	  tmp->next->next = tmp->next->next->next;
-	}
-    }
+  tmp = find_mem_to_free(ptr);
+  merge_memory(tmp);
   if (tmp && !tmp->next)
     suppress_mem(tmp);
   else if (tmp && tmp->next && !tmp->next->next)

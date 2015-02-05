@@ -5,7 +5,7 @@
 ## Login   <elkaim_r@epitech.net>
 ## 
 ## Started on  Tue Jan 27 12:11:45 2015 raphael elkaim
-## Last update Thu Feb  5 13:30:34 2015 raphael elkaim
+## Last update Thu Feb  5 14:29:45 2015 raphael elkaim
 ##
 
 CC	=	gcc
@@ -22,6 +22,7 @@ SRCS	=	malloc.c \
 		align.c \
 		list.c \
 		free.c \
+		merge.c \
 		realloc.c \
 
 OBJS	=	$(SRCS:.c=.o)
