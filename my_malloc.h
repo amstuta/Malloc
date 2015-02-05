@@ -5,7 +5,7 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 16:12:18 2015 raphael elkaim
-** Last update Wed Jan 28 15:31:57 2015 raphael elkaim
+** Last update Thu Feb  5 13:32:18 2015 raphael elkaim
 */
 
 #ifndef MY_MALLOC_H_
@@ -18,6 +18,7 @@ extern void	*g_startheap;
 extern t_list	*g_mem;
 
 void		*align(void *ptr);
+void		*fake_malloc(size_t size);
 void		*safe_malloc(size_t size);
 void		*safe_free(void *ptr);
 void		*change_mem_size(t_list *, size_t);

@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 11:00:26 2015 Arthur Amstutz
-** Last update Wed Feb  4 17:23:46 2015 raphael elkaim
+** Last update Thu Feb  5 13:19:11 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -32,7 +32,7 @@ void		*malloc(size_t size)
       if ((long long)g_startheap <= 0)
 	{
 	  pthread_mutex_unlock(&g_mut);
-	  return  (NULL);
+	  return (NULL);
 	}
     }
   while ((res = insert(size)) == 0)
@@ -79,59 +79,4 @@ void		*calloc(size_t size, size_t size2)
     ptr = memset(ptr, 0, size * size2);
   pthread_mutex_unlock(&g_mut);
   return (ptr);
-}
-
-void		*realloc(void *ptr, size_t size)
-{
-  t_list	*tmp;
-  void		*nptr;
-
-  tmp = g_mem;
-  if (!ptr && size)
-    return (safe_malloc(size));
-  if ((long)size <= 0 && ptr)
-    return (safe_free(ptr));
-  pthread_mutex_lock(&g_mut);  
-  while (tmp)
-    {
-      if (tmp->ptr_begin == ptr)
-	{
-	  nptr = change_mem_size(tmp, size);
-	  break ;
-	}
-      tmp = tmp->next;
-    }
-  pthread_mutex_unlock(&g_mut);  
-  return (nptr);
-}
-
-void	*safe_malloc(size_t size)
-{
-  void	*nptr;
-  
-  pthread_mutex_lock(&g_mut);
-  nptr = fake_malloc(size);
-  pthread_mutex_unlock(&g_mut);
-  return (nptr);
-}
-
-void	*safe_free(void *ptr)
-{  
-  pthread_mutex_lock(&g_mut);
-  fake_free(ptr);
-  pthread_mutex_unlock(&g_mut);
-  return (0);
-}
-
-void	*change_mem_size(t_list *tmp, size_t size)
-{
-  void	*nptr;
-
-  nptr = fake_malloc(size);
-  if (size >= (unsigned long)(tmp->ptr_end - tmp->ptr_begin) && nptr)
-    memcpy(nptr, tmp->ptr_begin, (tmp->ptr_end - tmp->ptr_begin));
-  else if (nptr)
-    memcpy(nptr, tmp->ptr_begin, size);
-  fake_free(tmp->ptr_begin);
-  return (nptr);
 }
