@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Wed Jan 28 12:26:26 2015 Arthur Amstutz
-** Last update Wed Feb  4 13:23:02 2015 raphael elkaim
+** Last update Thu Feb  5 12:56:53 2015 raphael elkaim
 */
 
 #include <stddef.h>
@@ -22,7 +22,8 @@ void		suppress_mem(t_list *elem)
       sbrk(-8192);
       elem->ptr_end = elem->ptr_end - 8192;
     }
-  if (elem == g_mem && (unsigned long)(elem->ptr_end - elem->ptr_begin) == 8192 - (unsigned long)align(g_startheap) - sizeof(t_list))
+  if (elem == g_mem && (unsigned long)(elem->ptr_end - elem->ptr_begin) ==
+      8192 - (unsigned long)align(g_startheap) - sizeof(t_list))
     {
       brk(g_startheap);
       g_mem = NULL;

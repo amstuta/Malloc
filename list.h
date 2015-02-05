@@ -5,13 +5,13 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:37:12 2015 Arthur Amstutz
-** Last update Tue Jan 27 17:02:45 2015 raphael elkaim
+** Last update Thu Feb  5 12:46:24 2015 raphael elkaim
 */
 
 #ifndef LIST_H_
 # define LIST_H_
 
-typedef enum	s_bool
+typedef enum	e_bool
   {
     false,
     true
@@ -26,7 +26,6 @@ typedef struct	s_list
 }		t_list;
 
 void   	show_alloc_mem();
-void   	delete_at_back();
 void 	*insert(size_t size);
 t_bool	add_memory_end();
 

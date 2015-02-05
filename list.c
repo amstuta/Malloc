@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Wed Feb  4 17:40:41 2015 raphael elkaim
+** Last update Thu Feb  5 13:10:23 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -34,22 +34,7 @@ void		show_alloc_mem()
       tmp = tmp->next;
       ++i;
     }
-  printf("the list size is:%d\n", i);
 }
-/*
-void		delete_at_back()
-{
-  t_list	*tmp;
-
-  tmp = g_mem;
-  if (tmp == NULL)
-    return ;
-  if (tmp->next == NULL)
-    tmp->isFree = true;
-  while (tmp->next->next != NULL)
-    tmp = tmp->next;
-  tmp->next->isFree = true;
-  }*/
 
 void		*insert(size_t size)
 {
@@ -59,7 +44,9 @@ void		*insert(size_t size)
   tmp = g_mem;
   while (tmp != NULL)
     {
-      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) > (size + 1 + sizeof(t_list) + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list))) \
+      if ((unsigned long)(tmp->ptr_end - tmp->ptr_begin) >
+	  (size + 1 + sizeof(t_list)
+	   + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list)))
 	  && tmp->isFree == true)
 	{
 	  new = tmp->ptr_begin + size;
@@ -89,7 +76,8 @@ t_bool		add_memory_end()
   if (g_mem == NULL)
     {
       g_mem = g_startheap;
-      g_mem->ptr_begin = g_startheap + sizeof(t_list) + (unsigned long)align(g_startheap);
+      g_mem->ptr_begin = g_startheap + sizeof(t_list)
+	+ (unsigned long)align(g_startheap);
       g_mem->ptr_end = g_startheap + 8192;
       g_mem->isFree = true;
       g_mem->next = 0;
