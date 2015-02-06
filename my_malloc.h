@@ -5,7 +5,7 @@
 ** Login   <elkaim_r@epitech.net>
 ** 
 ** Started on  Tue Jan 27 16:12:18 2015 raphael elkaim
-** Last update Thu Feb  5 14:30:28 2015 raphael elkaim
+** Last update Fri Feb  6 13:17:39 2015 raphael elkaim
 */
 
 #ifndef MY_MALLOC_H_
@@ -26,6 +26,7 @@ void		*safe_free(void *ptr);
 void		*change_mem_size(t_list *, size_t);
 void		fake_free(void *ptr);
 void		merge_memory(t_list *tmp);
+void		split_memory(t_list *tmp, size_t size);
 
 
 #endif /* !MY_MALLOC_H_ */

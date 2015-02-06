@@ -5,7 +5,7 @@
 ** Login   <amstut_a@epitech.net>
 ** 
 ** Started on  Tue Jan 27 12:50:52 2015 Arthur Amstutz
-** Last update Thu Feb  5 13:10:23 2015 raphael elkaim
+** Last update Fri Feb  6 13:17:11 2015 raphael elkaim
 */
 
 #include <unistd.h>
@@ -39,7 +39,6 @@ void		show_alloc_mem()
 void		*insert(size_t size)
 {
   t_list	*tmp;
-  t_list	*new;
 
   tmp = g_mem;
   while (tmp != NULL)
@@ -49,20 +48,28 @@ void		*insert(size_t size)
 	   + (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list)))
 	  && tmp->isFree == true)
 	{
-	  new = tmp->ptr_begin + size;
-	  new->ptr_begin = tmp->ptr_begin + size + sizeof(t_list);
-	  new->ptr_begin = new->ptr_begin + (unsigned long)align(new->ptr_begin);
-	  new->ptr_end = tmp->ptr_end;
-	  new->isFree = true;
-	  new->next = tmp->next;
-	  tmp->ptr_end = new->ptr_begin - sizeof(t_list) - (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list));
-	  tmp->isFree = false;
-	  tmp->next = new;
+	  split_memory(tmp, size);
 	  return (tmp->ptr_begin);
 	}
       tmp = tmp->next;
     }
   return (NULL);
+}
+
+void		split_memory(t_list *tmp, size_t size)
+{
+  t_list	*new;
+
+  new = tmp->ptr_begin + size;
+  new->ptr_begin = tmp->ptr_begin + size + sizeof(t_list);
+  new->ptr_begin = new->ptr_begin + (unsigned long)align(new->ptr_begin);
+  new->ptr_end = tmp->ptr_end;
+  new->isFree = true;
+  new->next = tmp->next;
+  tmp->ptr_end = new->ptr_begin - sizeof(t_list) -
+    (unsigned long)align(tmp->ptr_begin + size + sizeof(t_list));
+  tmp->isFree = false;
+  tmp->next = new;
 }
 
 t_bool		add_memory_end()
